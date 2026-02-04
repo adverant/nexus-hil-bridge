@@ -30,16 +30,16 @@ class HILBridgeAppDelegate: NSObject, NSApplicationDelegate {
     // MARK: - App Lifecycle
 
     func applicationDidFinishLaunching(_ notification: Notification) {
-        logger.info("Nexus HIL Bridge starting...")
+        logger.info("Adverant Nexus EE HIL Bridge starting...")
 
         setupMenuBar()
         startServices()
 
-        logger.info("Nexus HIL Bridge ready")
+        logger.info("Adverant Nexus EE HIL Bridge ready")
     }
 
     func applicationWillTerminate(_ notification: Notification) {
-        logger.info("Nexus HIL Bridge shutting down...")
+        logger.info("Adverant Nexus EE HIL Bridge shutting down...")
         stopServices()
     }
 
@@ -56,7 +56,7 @@ class HILBridgeAppDelegate: NSObject, NSApplicationDelegate {
         statusMenu = NSMenu()
 
         // Title
-        let titleItem = NSMenuItem(title: "Nexus HIL Bridge", action: nil, keyEquivalent: "")
+        let titleItem = NSMenuItem(title: "Adverant Nexus EE HIL Bridge", action: nil, keyEquivalent: "")
         titleItem.isEnabled = false
         statusMenu.addItem(titleItem)
 
@@ -220,10 +220,18 @@ class HILBridgeAppDelegate: NSObject, NSApplicationDelegate {
     }
 
     @objc private func viewLogs() {
-        // Open log file in Console.app
-        let logPath = FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask).first!
-            .appendingPathComponent("Logs/NexusHILBridge/hil-bridge.log")
-        NSWorkspace.shared.open(logPath)
+        // Open Console.app filtered by this app's subsystem
+        // The swift-log framework logs to unified logging (os_log) by default
+        let consoleURL = URL(fileURLWithPath: "/System/Applications/Utilities/Console.app")
+        let config = NSWorkspace.OpenConfiguration()
+        config.arguments = ["--predicate", "subsystem == 'ai.adverant.hil-bridge'"]
+        NSWorkspace.shared.openApplication(at: consoleURL, configuration: config) { _, error in
+            if let error = error {
+                // Fallback: just open Console.app
+                NSWorkspace.shared.open(consoleURL)
+                self.logger.warning("Failed to open Console with filter: \(error.localizedDescription)")
+            }
+        }
     }
 
     @objc private func quitApp() {

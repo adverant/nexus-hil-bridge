@@ -90,10 +90,20 @@ Installation:
 2. Launch from Applications or Spotlight
 3. The app will appear in your menubar (top-right)
 
-First Launch:
-If macOS shows a security warning:
-- Go to System Settings → Privacy & Security
-- Click "Open Anyway" next to the app name
+IMPORTANT - First Launch (macOS Security):
+-------------------------------------------
+macOS will show a security warning because the app isn't from the App Store.
+To open it:
+
+Method 1 (Recommended):
+  1. Right-click (or Control-click) on the app in Applications
+  2. Select "Open" from the menu
+  3. Click "Open" in the dialog
+
+Method 2:
+  1. Go to System Settings → Privacy & Security
+  2. Scroll to Security section
+  3. Click "Open Anyway" next to the blocked app name
 
 Usage:
 1. Connect your hardware instruments via USB
