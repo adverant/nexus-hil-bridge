@@ -2,12 +2,12 @@
 import PackageDescription
 
 let package = Package(
-    name: "NexusHILBridge",
+    name: "AdverantNexusEEHILBridge",
     platforms: [
         .macOS(.v13)
     ],
     products: [
-        .executable(name: "NexusHILBridge", targets: ["NexusHILBridge"]),
+        .executable(name: "AdverantNexusEEHILBridge", targets: ["AdverantNexusEEHILBridge"]),
     ],
     dependencies: [
         // WebSocket client
@@ -21,7 +21,7 @@ let package = Package(
     ],
     targets: [
         .executableTarget(
-            name: "NexusHILBridge",
+            name: "AdverantNexusEEHILBridge",
             dependencies: [
                 "Starscream",
                 "SwiftyJSON",
